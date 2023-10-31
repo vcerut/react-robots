@@ -4,9 +4,11 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import "./App.css";
-import HomePage from "./pages/HomePage";
+import { Suspense, lazy } from "react";
+// import HomePage from "./pages/HomePage";
 import DetailPage from "./pages/DetailPage";
 
+const HomePage = lazy(() => import("./pages/HomePage"));
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,7 +27,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<p>Waiting for lazy load</p>}>
+      {" "}
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 }
 
 export default App;
